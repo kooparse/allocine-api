@@ -1,0 +1,23 @@
+{
+  "name": "allocine-api",
+  "version": "1.0.0",
+  "description": "API for allocine DB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "allocine-api": "0.1.9",
+    "bluebird": "3.5.0",
+    "hapi": "16.1.1",
+    "hapi-boom-decorators": "2.3.0",
+    "joi": "10.4.2",
+    "lodash": "4.17.4",
+    "mongoose": "4.10.2",
+    "node-schedule": "1.2.1",
+    "object-hash": "^1.1.8"
+  }
+}
