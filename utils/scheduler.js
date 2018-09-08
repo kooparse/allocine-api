@@ -24,7 +24,7 @@ const getMovies = movieCode => new Promise((resolve, reject) => {
 })
 
 const getShowingMovies = () => new Promise((resolve, reject) => {
-  const query = { filter: 'nowshowing', page: 1, order: 'toprank', count: 50 }
+  const query = { filter: 'nowshowing', page: 1, order: 'toprank', count: 100 }
   return allocine.api('movielist', query, (error, result) => {
     if (error) return reject(error)
 
@@ -60,6 +60,8 @@ const getShowTimesFromZip = zip => new Promise((resolve, reject) => {
   return allocine.api('showtimelist', query, (error, result) => {
     if (error) return reject(error)
 
+    console.log(JSON.stringify(result));
+
     const list = getShowTimeList(result)
     const times = _.flattenDeep(list.map(({ timeList }) => timeList.map(t => t)))
     const theaterCodes = _.uniqBy(list, 'theaterCode').map(({ theaterCode }) => theaterCode)
@@ -84,8 +86,8 @@ exports.getShowTimesFromZip = getShowTimesFromZip
 exports.syncAll = zip => new Promise((resolve, reject) =>
   Promise.all([
     getShowingMovies(),
-    getTheaters(zip),
-    getShowTimesFromZip(zip)
+    // getTheaters(zip),
+    // getShowTimesFromZip(zip)
   ])
   .then(resolve)
   .catch(reject)

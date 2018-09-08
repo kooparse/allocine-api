@@ -34,13 +34,46 @@ server.route({
 	}
 })
 
+server.route({
+	method: 'GET',
+  path: '/api/{zipcode}/sync',
+	handler: sync,
+	config: {
+		cors: { origin: ['*'] }
+	}
+})
+
+server.route({
+	method: 'GET',
+  path: '/api/movie/{code}/showtimes',
+	handler: showtimes,
+	config: {
+		cors: { origin: ['*'] }
+	}
+})
+
 server.start(err => {
 	if (err) throw err
 	console.log(`Server running at: ${server.info.uri}`)
 })
 
+function showtimes(request, reply) {
+  const { code } = request.params
+
+  return Time.find({ movieCode: code })
+    .then(reply)
+    .catch(reply)
+}
+
+function sync(request, reply) {
+	const { zipcode } = request.params
+  syncAll(zipcode)
+    .then(reply)
+    .catch(reply)
+}
+
 function nowshowing(request, reply) {
-	return Movie.find({ rankTopMovie: { $lt: 50 } }).sort('rankTopMovie')
+	return Movie.find().sort('rankTopMovie')
 		.then(reply)
 		.catch(reply)
 }
